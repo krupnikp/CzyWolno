@@ -3,21 +3,29 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_ALERT = 'SET_ALERT';
 
+// export interface WeatherStation {
+//   id: number;
+//   stationName: string;
+//   gegrLat: number;
+//   gegrLon: number;
+//   city: {
+//     id: number;
+//     name: string;
+//     commune: {
+//       communeName: string;
+//       districtName: string;
+//       provinceName: string;
+//     }
+//   }
+//   addressStreet: boolean;
+// }
 export interface WeatherStation {
   id: number;
-  stationName: string;
-  gegrLat: number;
-  gegrLon: number;
-  city: {
+  stCalcDate: number;
+  stIndexLevel: {
     id: number;
-    name: string;
-    commune: {
-      communeName: string;
-      districtName: string;
-      provinceName: string;
-    }
+    indexLevelName: string;
   }
-  addressStreet: boolean;
 }
 export interface WeatherError {
   message: string;
