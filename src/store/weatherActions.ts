@@ -1,5 +1,4 @@
 import { ThunkAction } from 'redux-thunk'; 
-import { RootState } from '..';
 import { WeatherAction, WeatherStation, WeatherError, GET_WEATHER, SET_LOADING, SET_ERROR } from './types';
 import { RootState } from './store';
 
