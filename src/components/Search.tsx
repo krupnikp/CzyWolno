@@ -2,6 +2,7 @@ import React, { FC, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoading, getWether } from '../store/weatherActions';
 
+import { setAlert } from '../store/alertAction';
 
 interface SearchProps {
   title: string;
@@ -19,7 +20,10 @@ const Search: FC<SearchProps> = ({ title }) => {
     e.preventDefault();
 
     if (city.trim() === '') {
-      return console.log("City is required!");
+      return (
+        dispatch(setAlert('City is required!')),
+        console.log("City  is required!")
+      )
     }
 
     dispatch(setLoading());

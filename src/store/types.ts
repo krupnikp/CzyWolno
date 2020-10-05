@@ -28,6 +28,7 @@ export interface WeatherQuality {
   }
 }
 export interface WeatherError {
+  cod: string;
   message: string;
 }
 export interface WeatherState {
@@ -35,7 +36,6 @@ export interface WeatherState {
   loading: boolean;
   error: string;
 }
-
 
 interface GetWeatherStation {
   type: typeof GET_WEATHER;
@@ -50,3 +50,12 @@ interface SetErrorAction {
 }
 
 export type WeatherAction = GetWeatherStation | SetLoadingAction | SetErrorAction;
+
+export interface AlertAction {
+  type: typeof SET_ALERT;
+  payload: string;
+}
+
+export interface AlertState {
+  message: string;
+}

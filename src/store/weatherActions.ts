@@ -9,8 +9,8 @@ export const getWether = (city: string): ThunkAction<void, RootState, null, Weat
 
       if (!res.ok) {
         const resData: WeatherError = await res.json();
-        throw new Error(resData.message);
-        console.log("fetch not ok");
+        throw new Error(resData.message),
+        console.log("fetch not ok")
       }
 
       const resData: WeatherQuality = await res.json();
