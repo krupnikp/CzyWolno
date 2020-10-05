@@ -18,7 +18,7 @@ const App: FC = () => {
     <div className="has-text-centred">
       <Search title="ENTER city name" />
       {loading ? <h2 className="is-size-3 py-2">Loading...</h2> : weatherData && <Weather data={weatherData} />}
-
+      
     </div>
   );
 }

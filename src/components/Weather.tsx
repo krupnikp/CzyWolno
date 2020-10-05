@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import { WeatherStation } from '../store/types'
+import { WeatherQuality } from '../store/types'
 
 interface WeatherProps {
-  data: WeatherStation;
+  data: WeatherQuality;
 }
 
 const Weather: FC<WeatherProps> = ({ data }) => {
   return (
     <section className="section">
       <div className="conteiner">
-        <h1 className="title has-text-centred" style={{ marginBottom: 50 }}>{data.id}</h1>
+        <h1 className="title has-text-centred" style={{ marginBottom: 50 }}>{data.id}-{data.stIndexLevel.indexLevelName}</h1>
       </div>
     </section>
   )

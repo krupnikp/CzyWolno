@@ -19,7 +19,7 @@ export const SET_ALERT = 'SET_ALERT';
 //   }
 //   addressStreet: boolean;
 // }
-export interface WeatherStation {
+export interface WeatherQuality {
   id: number;
   stCalcDate: number;
   stIndexLevel: {
@@ -31,7 +31,7 @@ export interface WeatherError {
   message: string;
 }
 export interface WeatherState {
-  data: WeatherStation | null;
+  data: WeatherQuality | null;
   loading: boolean;
   error: string;
 }
@@ -39,7 +39,7 @@ export interface WeatherState {
 
 interface GetWeatherStation {
   type: typeof GET_WEATHER;
-  payload: WeatherStation;
+  payload: WeatherQuality;
 }
 interface SetLoadingAction {
   type: typeof SET_LOADING;
