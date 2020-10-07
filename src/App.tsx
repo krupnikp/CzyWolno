@@ -4,7 +4,7 @@ import './App.css';
 
 import { RootState } from './store/store';
 import Alert from './components/Alert';
-import Search from './components/Search';
+import Search from './components/Search/Search';
 import Weather from './components/Weather';
 import { setAlert } from './store/alertAction';
 import { setError } from './store/weatherActions';
