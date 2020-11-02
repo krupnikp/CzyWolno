@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { WeatherQuality } from '../store/types'
+import { WeatherQuality } from '../store/types';
 
 interface WeatherProps {
   data: WeatherQuality;

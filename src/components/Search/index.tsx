@@ -1,6 +1,6 @@
 import React, { FC, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setLoading, getWether } from '../../store/weatherActions';
+import { setLoading, getWeather } from '../../store/weatherActions';
 
 import { setAlert } from '../../store/alertAction';
 
@@ -12,7 +12,7 @@ interface SearchProps {
 
 const Search: FC<SearchProps> = ({ title }) => {
   const dispatch = useDispatch();
-  const [city, setCity] = useState('');
+  const [cityID, setCity] = useState('');
 
   const changeHandler = (e: FormEvent<HTMLInputElement>) => {
     setCity(e.currentTarget.value);
@@ -21,7 +21,7 @@ const Search: FC<SearchProps> = ({ title }) => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (city.trim() === '') {
+    if (cityID.trim() === '') {
       return (
         dispatch(setAlert('City is required!')),
         console.log("City  is required!")
@@ -29,7 +29,7 @@ const Search: FC<SearchProps> = ({ title }) => {
     }
 
     dispatch(setLoading());
-    dispatch(getWether(city));
+    dispatch(getWeather(cityID));
     setCity('');
   }
 
@@ -42,9 +42,9 @@ const Search: FC<SearchProps> = ({ title }) => {
             <input
               type="text"
               className="input has-text-centred mb-2"
-              placeholder="Enter city name"
+              placeholder="Enter cityID name"
               style={{ maxWidth: 300 }}
-              value={city}
+              value={cityID}
               onChange={changeHandler}
             />
             <Button>Search</Button>

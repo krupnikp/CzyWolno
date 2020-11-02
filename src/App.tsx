@@ -4,8 +4,11 @@ import './App.css';
 
 import { RootState } from './store/store';
 import Alert from './components/Alert';
-import Search from './components/Search/Search';
+import Search from './components/Search/';
 import Weather from './components/Weather';
+import Geolocation from './components/Geolocation';
+import MapOfPoland from './components/MapOfPoland/';
+
 import { setAlert } from './store/alertAction';
 import { setError } from './store/weatherActions';
 
@@ -19,6 +22,8 @@ const App: FC = () => {
   
   return (
     <div className="has-text-centred">
+      <MapOfPoland />
+      <Geolocation />
       <Search title="Wpisz ID stacji" />
       {loading ? <h2 className="is-size-3 py-2">Loading...</h2> : weatherData && <Weather data={weatherData} />}
       
