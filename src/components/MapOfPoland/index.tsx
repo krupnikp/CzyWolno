@@ -1,7 +1,111 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { geoMercator, geoPath } from 'd3-geo';
+import { feature } from 'topojson-client';
 import { Map } from './styled';
+import { MapProps, GeoStationProps } from './types';
+
+
+const geoStations: GeoStationProps[] = [
+  {
+    "id": 729,
+    "stationName": "AM1 Gdańsk Śródmieście",
+    "coordination": [18.635283, 54.353336],
+  },
+  {
+    "id": 530,
+    "stationName": "Warszawa-Komunikacyjna",
+    "coordination": [21.004724, 52.219298],
+  },
+  {
+    "id": 291,
+    "stationName": "Gajew",
+    "coordination": [19.233225, 52.143250],
+  },
+  {
+    "id": 114,
+    "stationName": "Wrocław - Bartnicza",
+    "coordination": [17.141125, 51.115933],
+  },
+]
+
+const projection = geoMercator()
+  .scale(4000)
+  .center([19.480556, 52.069167])
+  .translate([ 800 /2, 800 /2]);
 
 const MapOfPoland: React.FC = () => {
+  const [geo, setGeo] = useState([]);
+  const [province, setProvince] = useState();
+  const [loadedMap, setLoadedMap] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+
+  useEffect(() => {
+    fetch("./map-poland.json")
+      .then(response => {
+        if (response.status !== 200) {
+          console.log(`There was a problem: ${response.status}`);
+          return
+        }
+        response.json().then(mapdata => {
+          console.log(`halo: ${mapdata}`)
+          for (let key in mapdata.objects) {
+            setGeo((feature(mapdata, mapdata.objects[key]) as any).features);
+          }
+          setLoadedMap(true);
+        })
+      })
+  }, [])
+
+  const handleProvinceClick = (provinceIndex: number, e: React.FormEvent<EventTarget>) => {
+    e.preventDefault();
+
+    setProvince(geo[provinceIndex].properties.name); 
+    setSelected(true)
+    console.log("Marker: ", provinceIndex)
+  }
+  const geoPixel = projection(geoStations.coordination);
+
+  return (
+    <div className="App">
+      <svg style={{ border: "1px solid black" }} viewBox="0 0 800 800" > 
+        <g>
+          { loadedMap &&
+            geo.map((d, i) => (
+              <path
+                key={i}
+                className={d.properties.nazwa}
+                d={geoPath().projection(projection)(d) || undefined}
+                fill={selected ? "#ffffff" : "#eeeeee"}
+                stroke="#ffffff"
+                strokeWidth="1"
+                onClick={(e) => {
+                  console.log("onClick", geo[i]);
+                  handleProvinceClick(i, e);
+                }}
+              />
+            ))
+          }
+        </g>
+        <g>
+          { loadedMap &&
+            geoStations.map((geoStations, i) => (
+              <circle 
+                key={i}
+                cx={(geoPixel && geoPixel[0]) || 0} 
+                cy={(geoPixel && geoPixel[1]) || 0} 
+                fill="#E91E63" 
+                r={3} 
+                // onClick={ () => handleMarkerClick(i) }
+              />
+            ))
+          }
+        </g>
+      </svg>
+    <div>Selected element: {province}</div>
+    </div>
+  );
+
   return (
   
     <Map fill="none" height="100%" stroke="#ffffff"  strokeWidth="2" version="1.2" viewBox="0 0 1000 948" width="80%" xmlns="http://www.w3.org/2000/svg">
