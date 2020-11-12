@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
-import { Map } from './styled';
+import { Map, ProvinceMapElement } from './styled';
 import { MapProps, GeoStationProps } from './types';
 
 
@@ -34,10 +34,10 @@ const projection = geoMercator()
   .translate([ 800 /2, 800 /2]);
 
 const MapOfPoland: React.FC = () => {
-  const [geo, setGeo] = useState([]);
-  const [province, setProvince] = useState();
+  const [geo, setGeo] = useState<any>();
+  const [province, setProvince] = useState("");
   const [loadedMap, setLoadedMap] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>();
 
 
   useEffect(() => {
@@ -52,57 +52,61 @@ const MapOfPoland: React.FC = () => {
           for (let key in mapdata.objects) {
             setGeo((feature(mapdata, mapdata.objects[key]) as any).features);
           }
+          console.log("GEO: ", geo);
           setLoadedMap(true);
         })
       })
   }, [])
 
-  const handleProvinceClick = (provinceIndex: number, e: React.FormEvent<EventTarget>) => {
-    e.preventDefault();
+  const handleProvinceClick = (provinceIndex: number) => {
 
     setProvince(geo[provinceIndex].properties.name); 
-    setSelected(true)
+    setSelectedIndex(provinceIndex)
     console.log("Marker: ", provinceIndex)
   }
-  const geoPixel = projection(geoStations.coordination);
+  // const geoPixel = projection(geoStations.coordination);
 
   return (
-    <div className="App">
-      <svg style={{ border: "1px solid black" }} viewBox="0 0 800 800" > 
-        <g>
-          { loadedMap &&
-            geo.map((d, i) => (
-              <path
-                key={i}
-                className={d.properties.nazwa}
-                d={geoPath().projection(projection)(d) || undefined}
-                fill={selected ? "#ffffff" : "#eeeeee"}
-                stroke="#ffffff"
-                strokeWidth="1"
-                onClick={(e) => {
-                  console.log("onClick", geo[i]);
-                  handleProvinceClick(i, e);
-                }}
-              />
-            ))
+    <div>
+      { !loadedMap ?
+        <div>
+          Loading MAP....
+        </div> 
+        :
+        <Map style={{ border: "1px solid black" }} viewBox="0 0 1800 800" >
+          <g>
+          {geo.map((d, i) => (
+            <ProvinceMapElement
+              key={i}
+              className={d.properties.name}
+              d={geoPath().projection(projection)(d) || undefined}
+              provinceColor={selectedIndex === i}
+              onClick={(e) => {
+                console.log("onClick", geo[i]);
+                handleProvinceClick(i);
+              }}
+            />
+          ))
           }
         </g>
         <g>
-          { loadedMap &&
-            geoStations.map((geoStations, i) => (
-              <circle 
-                key={i}
-                cx={(geoPixel && geoPixel[0]) || 0} 
-                cy={(geoPixel && geoPixel[1]) || 0} 
-                fill="#E91E63" 
-                r={3} 
-                // onClick={ () => handleMarkerClick(i) }
-              />
-            ))
+          {geoStations.map((geoStations, i) => (
+            <circle
+              key={i}
+              // cx={projection(geoStations.coordination)[0]} 
+              // cy={projection(geoStations.coordination)[1]} 
+              // cx={(geoPixel && geoPixel[0]) || 0} 
+              // cy={(geoPixel && geoPixel[1]) || 0} 
+              fill="#E91E63"
+              r={3}
+            // onClick={ () => handleMarkerClick(i) }
+            />
+          ))
           }
-        </g>
-      </svg>
-    <div>Selected element: {province}</div>
+          </g>
+        </Map>
+      }
+    <div>Index element: {province}</div>
     </div>
   );
 

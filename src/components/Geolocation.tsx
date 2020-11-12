@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { usePosition } from 'use-position';
 
 const Geolocation: React.FC = () => {
