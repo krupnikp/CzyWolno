@@ -7,9 +7,9 @@ interface WeatherProps {
 
 const Weather: FC<WeatherProps> = ({ data }) => {
   return (
-    <section className="section">
-      <div className="conteiner">
-        <h1 className="title has-text-centred" style={{ marginBottom: 50 }}>{data.id}-{data.stIndexLevel.indexLevelName}</h1>
+    <section>
+      <div>
+        <h1 style={{ marginBottom: 50 }}>{data.id}-{data.stIndexLevel.indexLevelName}</h1>
       </div>
     </section>
   )

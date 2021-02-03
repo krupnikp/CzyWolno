@@ -34,11 +34,11 @@ const Search: FC<SearchProps> = ({ title }) => {
   }
 
   return (
-    <div className="hero is-light has-text-centred">
-      <div className="hero-body">
-        <div className="container">
-          <h1 className="title">{title}</h1>
-          <form className="py-5" onSubmit={submitHandler}>
+    <div>
+      <div>
+        <div>
+          <h1>{title}</h1>
+          <form onSubmit={submitHandler}>
             <input
               type="text"
               className="input has-text-centred mb-2"
