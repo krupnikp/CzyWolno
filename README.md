@@ -1,24 +1,27 @@
 # CzyWolno - Smog app
-<br>
 The app was created for the new air quality provinces regulations. 
+According to the new Polish regulations, GIOŚ (Główny Inspektorat Ochrony Środowiska) decides whether the air is polluted in a given region and on this basis prohibits, for example:
+* smoking in the fireplace
+* having a barbecue
+* mowing the grass
 
-**Work has been halted because their guidelines depend on human decisions. There is no basis for designating regulations based on the GIOŚ API.**
-**The application became a training one.**
+My app CzyWolno (Can You) was supposed to inform user, whether their area is subjected to restrictions.
+
+**Work has been halted because their guidelines depend on human decisions.**
+<br>
+**The application has become a training one.**
 
 ## Architecture
-<br>
--React Hooks<br>
--TypeScript<br>  
--Redux<br>  
--Styled Compoments<br>  
--D3<br> 
+- React Hooks
+- TypeScript  
+- Redux 
+- Styled Compoments
+- D3
 
 ## Roadmap
-<br>
 <s>Map rendering using D3 geo </s><br>  
 <s>API integration</s><br>  
-<s>API alerts</s><br>  
-<s>API search</s><br>  
+<s>API error handling</s><br>   
 <s>Browser geolocation</s><br>  
 <s>Map optimization by TopoJSON</s><br>  
 <s>Map interactions</s><br>  
@@ -30,7 +33,6 @@ Air quality impact on the displayed data regulations<br>
 
 
 ## Setup
-<br>
 This project using Yarn:
 
 ```
